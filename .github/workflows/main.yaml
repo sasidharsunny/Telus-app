@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build_and_test:
+  build_and_publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,9 +22,15 @@ jobs:
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
 
+    - name: List generated WAR files
+      run: ls -l build/libs/*.war
+
     - name: Publish to Artifactory
       run: |
-          curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T build/libs/*.war "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/*.war"
+          for war_file in build/libs/*.war; do
+            curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T "$war_file" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/$(basename $war_file)"
+          done
       env:
         ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
         ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
