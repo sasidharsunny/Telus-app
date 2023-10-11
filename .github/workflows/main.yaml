@@ -25,7 +25,6 @@ jobs:
     - name: Publish to Artifactory
       run: |
           curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T build/libs/*.war "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/*.war"
-        env:
-          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-
+      env:
+        ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+        ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
