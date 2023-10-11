@@ -23,12 +23,12 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: List generated WAR files
-      run: ls -l build/libs/*.war
+      run: ls -l build/libs/*.jar
 
     - name: Publish to Artifactory
       run: |
-          for war_file in build/libs/*.war; do
-            curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T "$war_file" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/$(basename $war_file)"
+          for war_file in build/libs/*.jar; do
+            curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T "$jar_file" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/$(basename $jar_file)"
           done
       env:
         ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
