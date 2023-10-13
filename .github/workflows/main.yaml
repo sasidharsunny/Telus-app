@@ -19,8 +19,8 @@ jobs:
         java-version: 8 
 
     - name: Login to GitHub Packages
-        uses: actions/checkout@v3
-        with:
+      uses: actions/checkout@v3
+      with:
           repository: sasidharsunny/Telus-app
           ref: 'main'
           token: ${{ secrets.G_TOKEN }}
