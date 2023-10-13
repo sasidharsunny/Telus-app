@@ -18,10 +18,9 @@ jobs:
       with:
         java-version: 8 
 
-    - name: Build and Deploy
-      env:
-        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-        NEXUS_REPO_URL: ${{ secrets.NEXUS_REPO_URL }}
-      run: |
-        mvn deploy -DaltDeploymentRepository=nexus::default::$NEXUS_REPO_URL
+    - name: Login to GitHub Packages
+        uses: actions/checkout@v3
+        with:
+          repository: sasidharsunny/Telus-app
+          ref: 'main'
+          token: ${{ secrets.G_TOKEN }}
