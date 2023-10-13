@@ -1,4 +1,4 @@
-name: Nexus Deployment
+name: Argo Deployment
 
 on:
   push:
