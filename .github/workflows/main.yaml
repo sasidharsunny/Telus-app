@@ -21,7 +21,7 @@ jobs:
 
     - name: Set Environment Path for JFrog CLI
       run: |
-        echo 'export PATH="/usr/local/bin:$PATH"' >> $GITHUB_ENV
+        echo 'export PATH="$PATH:$JFROG_CLI_HOME"' >> $GITHUB_ENV
       shell: bash
 
     - name: Build and Publish
@@ -33,3 +33,4 @@ jobs:
         jfrog rt u "target/my-app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
       env:
         JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
+
