@@ -12,6 +12,17 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+    - name: Install JFrog CLI
+      run: |
+       curl -fL https://getcli.jfrog.io | sh
+      env:
+        JFROG_CLI_HOME: /usr/local/bin
+    - name: Set Environment Path for JFrog CLI
+      run: |
+        echo 'export PATH="/usr/local/bin:$PATH"' >> $GITHUB_ENV
+      shell: bash
+
+
 
     - name: Build and Publish
       run: |
