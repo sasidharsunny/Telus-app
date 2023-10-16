@@ -1,4 +1,4 @@
-name: Argo Deployment
+name: Publish to JFrog Artifactory
 
 on:
   push:
@@ -13,26 +13,12 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8 
-
-    - name: Login to GitHub Packages
-      uses: actions/checkout@v3
-      with:
-          repository: sasidharsunny/Telus-app
-          ref: 'main'
-          token: ${{ secrets.G_TOKEN }}
-
-    - name: Update Replicas
+    - name: Build and Publish
       run: |
-        # Modify the deployment.yaml file to set the desired number of replicas
-        sed -i 's/replicas: [0-9]*/replicas: 4/' Deployment/Deployment.yaml
+        # Build your application or package
+        # Publish the artifact to JFrog Artifactory
+        jfrog rt config MyArtifactory --url=http://18.204.209.62:8081/ --apikey=$JFROG_API_KEY
+        jfrog rt u "target/my-app.jar" "MyArtifactory/http://18.204.209.62:8081/artifactory/maven-artifact/my-app/*.jar"
+      env:
+        JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
 
-        # Commit the changes
-        git config --global user.email "sasidharsunny94@gmail.com"
-        git config --global user.name "sasidharsunny"
-        git add .
-        git commit -m "Update replicas to 4"
-        git push origin main  # Update the branch name as needed
