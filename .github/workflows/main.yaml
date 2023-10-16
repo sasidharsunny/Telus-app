@@ -12,32 +12,6 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-    - name: Install JFrog CLI
-      run: |
-       curl -fL https://getcli.jfrog.io | sh
-      env:
-        JFROG_CLI_HOME: /usr/local/bin
-    - name: Set Environment Path for JFrog CLI
-      run: |
-        echo 'export PATH="/usr/local/bin:$PATH"' >> $GITHUB_ENV
-      shell: bash
-
-
-
- name: Publish to JFrog Artifactory
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
 
     - name: Install JFrog CLI
       run: |
@@ -59,5 +33,3 @@ jobs:
         jfrog rt u "target/my-app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
       env:
         JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
-
-
