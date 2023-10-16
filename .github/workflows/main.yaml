@@ -24,12 +24,40 @@ jobs:
 
 
 
+ name: Publish to JFrog Artifactory
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Install JFrog CLI
+      run: |
+        curl -fL https://getcli.jfrog.io | sh
+      env:
+        JFROG_CLI_HOME: /usr/local/bin
+
+    - name: Set Environment Path for JFrog CLI
+      run: |
+        echo 'export PATH="/usr/local/bin:$PATH"' >> $GITHUB_ENV
+      shell: bash
+
     - name: Build and Publish
       run: |
         # Build your application or package
-        # Publish the artifact to JFrog Artifactory
+        # Configure JFrog CLI with your Artifactory details
         jfrog rt config MyArtifactory --url=http://18.204.209.62:8081/ --apikey=$JFROG_API_KEY
-        jfrog rt u "target/my-app.jar" "MyArtifactory/http://18.204.209.62:8081/artifactory/maven-artifact/my-app/*.jar"
+        # Publish the artifact to JFrog Artifactory
+        jfrog rt u "target/my-app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
       env:
         JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
+
 
