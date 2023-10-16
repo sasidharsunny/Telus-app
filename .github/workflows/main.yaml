@@ -21,15 +21,14 @@ jobs:
       env:
         JFROG_CLI_HOME: /usr/local/bin
 
-    - name: Build and Publish
+       - name: Build and Publish
       run: |
         # Build your application or package
-        # Configure JFrog CLI with your Artifactory details using username and password and api
-        jfrog config add MyArtifactory --artifactory-url=http://18.204.209.62:8081/artifactory/ --user=YOUR_USERNAME --password=YOUR_PASSWORD
+        # Configure JFrog CLI with your Artifactory details
+        curl http://18.204.209.62:8081/
+        jfrog rt config MyArtifactory --url=http://18.204.209.62:8081/ --apikey=$JFROG_API_KEY
         # Publish the artifact to JFrog Artifactory
-        ./jfrog rt u --url=http://18.204.209.62:8081/artifactory --user=admin --password=admin@1234 test/file.jar test
+        jfrog rt u "target/my-app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
       env:
-       JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
-       YOUR_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-       YOUR_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
 
