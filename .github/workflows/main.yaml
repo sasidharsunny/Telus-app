@@ -24,7 +24,7 @@ jobs:
     - name: Build and Publish
       run: |
         # Build your application or package
-        # Configure JFrog CLI with your Artifactory details using the new syntax
+        # Configure JFrog CLI with your Artifactory details using the new syntax format
         jfrog config add MyArtifactory --artifactory-url=http://18.204.209.62:8081/artifactory/ --access-token=$JFROG_API_KEY
         # Publish the artifact to JFrog Artifactory
         jfrog rt u "app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
