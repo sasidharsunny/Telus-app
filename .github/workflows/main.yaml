@@ -27,7 +27,7 @@ jobs:
         # Configure JFrog CLI with your Artifactory details using the new syntax
         jfrog config add MyArtifactory --artifactory-url=http://18.204.209.62:8081/ --access-token=$JFROG_API_KEY
         # Publish the artifact to JFrog Artifactory
-        jfrog rt u "target/my-app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
+        jfrog rt u "app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
       env:
         JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
 
