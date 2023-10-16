@@ -21,7 +21,7 @@ jobs:
       env:
         JFROG_CLI_HOME: /usr/local/bin
 
-       - name: Build and Publish
+    - name: Build and Publish
       run: |
         # Build your application or package
         # Configure JFrog CLI with your Artifactory details
@@ -31,4 +31,3 @@ jobs:
         jfrog rt u "target/my-app.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
       env:
         JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
-
