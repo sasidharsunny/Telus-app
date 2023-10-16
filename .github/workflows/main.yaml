@@ -34,5 +34,5 @@ jobs:
         git config --global user.email "sasidharsunny94@gmail.com"
         git config --global user.name "sasidharsunny"
         git add .
-        git commit -m "Update replicas to 4"
+        git commit -m "Update replicas to 5"
         git push origin main  # Update the branch name as needed
