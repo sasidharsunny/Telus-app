@@ -28,7 +28,7 @@ jobs:
     - name: Update Replicas
       run: |
         # Modify the deployment.yaml file to set the desired number of replicas
-        sed -i 's/replicas: [0-9]*/replicas: 5/' deployment.yaml
+        sed -i 's/replicas: [0-9]*/replicas: 5/' sasidharsunny/Telus-app/Deployment/Deployment.yaml
 
         # Commit the changes
         git config --global user.email "sasidharsunny94@gmail.com"
