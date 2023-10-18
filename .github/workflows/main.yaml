@@ -13,6 +13,12 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
+    - name: Build project with Maven
+      run: mvn clean install --file pom.xml
+
+    - name: List generated WAR files
+      run: ls -l /home/runner/work/Telus-project/Telus-project/webapp/target/*.war 
+
     - name: Setup JFrog CLI
       uses: jfrog/setup-jfrog-cli@v1
       with:
