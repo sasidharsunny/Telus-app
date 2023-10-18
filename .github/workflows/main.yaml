@@ -13,26 +13,19 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Build project with Maven
-      run: mvn clean install --file pom.xml
-
-    - name: List generated WAR files
-      run: ls -l /home/runner/.m2/repository/org/kth/github-action-maven-tutorial/1.0-SNAPSHOT/github-action-maven-tutorial-1.0-SNAPSHOT.jar
-    - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@v1
-      with:
-        jfrog-cli-version: 'latest'
-        artifactory-url: 'http://18.204.209.62:8081/'
-      env:
-        JFROG_CLI_HOME: /usr/local/bin
-
-    - name: Build and Publish
+    - name: Build and package your application
       run: |
-        # Build your application or package
-        # Configure JFrog CLI with your Artifactory details using the new syntax
-        jfrog config add MyArtifactory --artifactory-url=http://18.204.209.62:8081/ --access-token=$JFROG_API_KEY
-        # Publish the artifact to JFrog Artifactory
-        jfrog rt u "/home/runner/.m2/repository/org/kth/github-action-maven-tutorial/1.0-SNAPSHOT/github-action-maven-tutorial-1.0-SNAPSHOT.jar" "MyArtifactory/maven-artifact/my-app/*.jar"
+         mvn clean install --file pom.xml
+    
       env:
-        JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
+        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
 
+    - name: Upload to Nexus Artifactory
+      run: |
+        # Example of using cURL to upload an artifact
+        curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file /home/runner/.m2/repository/org/kth/github-action-maven-tutorial/1.0-SNAPSHOT/github-action-maven-tutorial-1.0-SNAPSHOT.jar \
+        http://3.85.171.142:8081/java-project-artifact/maven-releases/com/example/github-action-maven-tutorial-1.0-SNAPSHOT.jar/1.0.0/github-action-maven-tutorial-1.0-SNAPSHOT.jar
+      env:
+        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
