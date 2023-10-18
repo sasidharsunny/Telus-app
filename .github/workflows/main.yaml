@@ -17,8 +17,7 @@ jobs:
       run: mvn clean install --file pom.xml
 
     - name: List generated WAR files
-      run: ls -l /home/runner/work/Telus-project/Telus-project/webapp/target/*.war 
-
+      run: ls -l /home/runner/.m2/repository/org/kth/github-action-maven-tutorial/1.0-SNAPSHOT/github-action-maven-tutorial-1.0-SNAPSHOT.jar
     - name: Setup JFrog CLI
       uses: jfrog/setup-jfrog-cli@v1
       with:
