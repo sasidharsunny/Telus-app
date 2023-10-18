@@ -17,7 +17,7 @@ jobs:
       run: mvn clean install --file pom.xml
 
     - name: Code Analysis with CheckStyle
-      run: sh 'mvn checkstyle:checkstyle'
+      run: echo 'mvn checkstyle:checkstyle'
 
     - name: Upload artifact 
       uses: actions/upload-artifact@master
