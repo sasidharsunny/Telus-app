@@ -16,8 +16,10 @@ jobs:
     - name: Build project with Maven
       run: mvn clean install --file pom.xml
 
-    - name: Code Analysis with CheckStyle
-      run: echo 'mvn checkstyle:checkstyle'
+    - name: Run CheckStyle
+      run: |
+        wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.46/checkstyle-8.46-all.jar -O checkstyle.jar
+        java -jar checkstyle.jar -c checkstyle.xml .
 
     - name: Upload artifact 
       uses: actions/upload-artifact@master
