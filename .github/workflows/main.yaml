@@ -6,26 +6,23 @@ on:
       - main
 
 jobs:
-  build:
+  CI-CD:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-
-    - name: Build and package your application
-      run: |
-         mvn clean install --file pom.xml
     
-      env:
-        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+    - name: Build project with Maven
+      run: mvn clean install --file pom.xml
 
-    - name: Upload to Nexus Artifactory
-      run: |
-        # Example of using cURL to upload an artifact
-        curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file /home/runner/.m2/repository/org/kth/github-action-maven-tutorial/1.0-SNAPSHOT/github-action-maven-tutorial-1.0-SNAPSHOT.jar \
-        http://3.85.171.142:8081/java-project-artifact/maven-releases/com/example/github-action-maven-tutorial-1.0-SNAPSHOT.jar/1.0.0/github-action-maven-tutorial-1.0-SNAPSHOT.jar
-      env:
-        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+    - name: Code Analysis with CheckStyle
+      run: sh 'mvn checkstyle:checkstyle'
+
+    - name: Upload artifact 
+      uses: actions/upload-artifact@master
+      with:
+          name: artifacts
+          path: /home/runner/.m2/repository/org/kth/github-action-maven-tutorial/1.0-SNAPSHOT/github-action-maven-tutorial-1.0-SNAPSHOT.jar
+
+  
